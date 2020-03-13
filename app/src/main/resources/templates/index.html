@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>dictionary</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+<script th:src="@{/js/index.js}"></script>
+</head>
+<body>
+
+	<div id="head">
+		<ul>
+			<a th:href="@{/check}"><li>貸出状況</li></a>
+			<a th:href="@{/day}"><li>日程確認</li></a>
+			<a th:href="@{/home}"><li>HOME</li></a>
+		</ul>
+	</div>
+
+	<div id="search">
+		<form th:action="@{/index/result}" th:object="${Book}" method="post">
+			<select name="genre">
+			<option value="">分野を選択して下さい</option>
+			<option value="技術">技術</option>
+			<option value="健康">健康</option>
+			<option value="科学">科学</option>
+			</select>
+			<input type="text" name="name">
+			<input type="submit" value="検索">
+		</form>
+	</div>
+
+
+
+	<div th:each="list : ${list}" th:object="${list}" class="parent">
+		<a href="detail.html" th:href="@{/index/result/{name}(name=*{name},id=*{id})}"><h3 th:text="*{name}"></h3></a>
+		<img th:src="@{*{img}}" th:alt="*{name}">
+		<div class="inner">
+
+			著者:
+			<norb th:text="*{author}"></norb>
+			<p>
+				分野:
+				<norb th:text="*{genre}"></norb>
+		</div>
+	</div>
+	</div>
+
+
+
+</body>
+</html>

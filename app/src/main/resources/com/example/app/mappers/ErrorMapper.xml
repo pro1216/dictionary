@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mappers.ErrorMapper">
+
+<resultMap type="com.example.app.domain.Error"
+	id="errorResultMap">
+	<result property="keyword" column="keyword" />
+	<result property="errorMessage" column="errorMessage" />
+	<result property="word" column="word" />
+</resultMap>
+<select id="findMessage" parameterType="String" resultMap="errorResultMap">
+	SELECT
+		errorMessage
+	FROM
+		error
+	where
+		keyword = #{keyword}
+	and
+		word = #{word};
+</select>
+</mapper>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hello, Spring Boot!</title>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+<script th:src="@{/js/user.js}"></script>
+</head>
+<body>
+	<div id="head">
+		<h1>図書ページ</h1>
+	</div>
+	<div class="main">
+		<div class="form">
+
+			<p th:if="${not #strings.isEmpty(msg)}">
+			<p th:text="${msg}" class="error"></p>
+
+			<div class="login">
+				<div class="login-triangle"></div>
+
+				<h2 class="login-header">Log in</h2>
+
+				<form class="login-container" action="#" th:action="@{/user}" th:object="${User}"
+				method="post">
+					<p>
+						<input type="text" name = "userId" placeholder="ID" >
+					</p>
+					<p>
+						<input type="password" name ="password" placeholder="Password">
+					</p>
+					<p>
+						<input type="submit" value="Log in">
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

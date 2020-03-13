@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mappers.BookMapper">
+
+	<resultMap type="com.example.app.domain.Book"
+		id="bookResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="author" column="author" />
+		<result property="img" column="img" />
+		<result property="genreId" column="genreId" />
+		<result property="genre" column="genre" />
+		<result property="lentFlg" column="lentFlg" />
+		<result property="stock" column="stock" />
+	</resultMap>
+
+	<select id="findAll" resultMap="bookResultMap">
+		SELECT
+		*
+		FROM
+		books a
+		inner join
+		genres b
+		on
+		a.genreId = b.genreId
+
+	</select>
+
+	<select id="findByGenre" resultMap="bookResultMap">
+		SELECT
+		*
+		FROM
+		books a
+		inner join
+		genres b
+
+		<where>
+			<if test="genre != '' and name != ''">
+				a.genreId = b.genreId
+				and
+				a.name like concat
+				('%',#{name},'%')
+
+
+			</if>
+			<if test="genre == '' and name != ''">
+				a.name like concat ('%',#{name},'%')
+				and
+				a.genreId =
+				b.genreId
+
+			</if>
+			<if test="genre != '' and name == ''">
+				a.genreId = (select genreId from genres where genre =
+				#{genre})
+				and
+				a.genreId = b.genreId
+
+			</if>
+			<if test="genre == '' and name == ''">
+				a.genreId = b.genreId
+			</if>
+		</where>
+	</select>
+
+	<select id="findById" resultMap="bookResultMap">
+		SELECT
+		*
+		FROM
+		books a
+		inner join
+		genres b
+		where
+		a.id = #{id}
+		and
+		a.genreId = b.genreId
+	</select>
+	<update id="updateById" parameterType="String">
+		update
+		books
+		set
+		lentFlag = 1,
+		stock = stock - 1,
+		data = #{date}
+		where
+		id = #{id}
+
+	</update>
+	<select id="findByLentFlag" resultMap="bookResultMap">
+		SELECT
+		*
+		FROM
+		books a
+		inner join
+		genres b
+		where
+		a.lentFlag = 1
+		and
+		a.genreId = b.genreId
+	</select>
+
+</mapper>

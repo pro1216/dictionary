@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/check.css}">
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>名前</th>
+			<th>本</th>
+			<th>著者</th>
+			<th>分野</th>
+			<th>状態</th>
+		</tr>
+		<div th:each="list : ${list}" th:object="${list}" class="parent">
+			<tr>
+				<div th:if="*{lentFlag} != 0">
+					<td><a href="detail.html"
+						th:href="@{/index/result/{name}(name=*{name},id=*{id})}"><h3
+								th:text="*{name}"></a>
+						</h3></td>
+					<td><img th:src="@{*{img}}" class="img"></td>
+
+					<td th:text="*{author}"></td>
+					<td th:text="*{genre}"></td>
+					<td th:if="*{flg} != 0">
+						<p>承認済みです</p>
+					</td>
+					<td th:if="*{flg} == 0">
+						<p>未承認です</p>
+					</td>
+				</div>
+			</tr>
+		</div>
+	</table>
+</body>
+</html>

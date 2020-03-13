@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/detail.css}">
+</head>
+<body>
+	<div th:each="list : ${list}" th:object="${list}" class="parent">
+		<h3 th:text="*{name}"></h3>
+		<img th:src="@{*{img}}" th:alt="*{name}">
+		<div class="inner">
+
+			著者:
+			<norb th:text="*{author}"></norb>
+			<p>
+				分野:
+				<norb th:text="*{genre}"></norb>
+			<p>
+		</div>
+	</div>
+	<a href="#" onclick="window.history.back(); return false;">直前のページに戻る</a>
+	<div th:each="list : ${list}">
+		<div th:if="${list.lentFlag} != 1">
+		<form th:action="@{/index/approve}" method="post">
+			<input type="hidden" name="id" th:value="${param.id}"> <input
+				type="submit" value="申請する">
+		</form>
+		</div>
+		<p th:if="${list.lentFlag} == 1"></p>
+	</div>
+
+</body>
+</html>
